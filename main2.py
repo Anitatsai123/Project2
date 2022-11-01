@@ -55,21 +55,23 @@ class Window(tk.Tk):
 
     def __init__(self):
         super().__init__()
+        #---- start color_frame -----
         color_frame = tk.Frame(self,borderwidth=2,relief=tk.GROOVE)
         color_frame.pack(padx=50,pady=50) 
-
+        tk.Label(color_frame,text="請選擇顏色:",font=("Arial",16)).grid(row=0,column=0,columnspan=3,sticky=tk.W)
+        
         red = ColorCanvas(color_frame,"red",width=100,height=100)
         red.bind('<ButtonRelease-1>',self.mouse_click)
-        red.grid(row=0, column=0)               
+        red.grid(row=1, column=0)               
         green = ColorCanvas(color_frame,"green",width=100,height=100)
         green.bind('<ButtonRelease-1>',self.mouse_click)        
-        green.grid(row=0, column=1)        
+        green.grid(row=1, column=1)        
         blue = ColorCanvas(color_frame,"blue",width=100,height=100)
         blue.bind('<ButtonRelease-1>',self.mouse_click) 
-        blue.grid(row=0, column=2)  
+        blue.grid(row=1, column=2)  
         Window.set_select_convas(red)
         select_canvas = Window.get_select_convas()
-        print(select_canvas.rec_color)
+        #---- end color_frame -----
     
     def mouse_click(self, event):
         Window.set_select_convas(event.widget)
