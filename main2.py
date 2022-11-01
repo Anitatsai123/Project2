@@ -55,27 +55,22 @@ class Window(tk.Tk):
         cls.selected_convas = convas
         cls.selected_convas.state = ColorCanvas.ON
 
-        light_state = False
-        @classmethod #Decorator
-        def get_current_state(cls):
-            return cls.light_state
+    light_state = False
+    
 
-        @classmethod #Decorator
-        def set_current_state(cls,state):
-            cls.light_state = state
 
     def __init__(self):
         super().__init__()
-        #---- start title_frame ----- (frame可視為容器)
+        #---- start title_frame -----
         title_frame = tk.Frame(self)
         title_frame.pack(pady=(30,0))
         tk.Label(title_frame,text="RGB燈光顏色控制器",font=('Arial',20)).pack()        
+       
 
         #---- start color_frame -----
         color_frame = tk.Frame(self,borderwidth=2,relief=tk.GROOVE)
         color_frame.pack(padx=50,pady=50) 
-        tk.Label(color_frame,text="請選擇顏色:",font=("Arial",16)).grid(row=0,column=0,columnspan=3,sticky=tk.W,padx=10,pady=10)
-        
+        tk.Label(color_frame,text="請選擇顏色:",font=("Arial",16)).grid(row=0,column=0,columnspan=3,sticky=tk.W,padx=10,pady=10)        
         red = ColorCanvas(color_frame,"red",width=100,height=100)
         red.bind('<ButtonRelease-1>',self.mouse_click)
         red.grid(row=1, column=0)               
@@ -83,33 +78,33 @@ class Window(tk.Tk):
         green.bind('<ButtonRelease-1>',self.mouse_click)        
         green.grid(row=1, column=1)        
         blue = ColorCanvas(color_frame,"blue",width=100,height=100)
-        blue.bind('<ButtonRelease-1>',self.mouse_click) 
-        blue.grid(row=1, column=2)  
+        blue.bind('<ButtonRelease-1>',self.mouse_click)        
+        blue.grid(row=1, column=2)
         Window.set_select_convas(red)
         select_canvas = Window.get_select_convas()
-    
+        
+
         #---- start light_state_frame -----
         light_state_frame = tk.Frame(self,borderwidth=2,relief=tk.GROOVE)
         state_label =  tk.Label(light_state_frame,text="目前燈光:關",font=('Arail',16),anchor=tk.W)
         state_label.pack(fill=tk.X,padx=10,pady=10)
         light_state_frame.pack(fill=tk.X,padx=50,pady=(0,30))
         
+
         #gpiozero->一定要self
         self.button = Button(18)
         self.button.when_released = self.button_released
         
-    def mouse_click(self, event):
+
+    def mouse_click(self,event):
         Window.set_select_convas(event.widget)
-        #print(event.__dict__)
-        #print(event.widget.rec_color)
-        #event.widget.delete()
-        
-        #event.widget.create_rectangle(10,10,60,60,fill='white')
-        #event.widget.create_rectangle(20,20,50,50,fill='red')
-        #event.widget.update()
-    
+
     def button_released(self):
-        print("button release")
+        Window.light_state = not Window.light_state
+        if Window.light_state == True:
+            print("開燈")
+        else:
+            print("關燈")
 
 def main():
     window = Window()
