@@ -42,16 +42,25 @@ class ColorCanvas(tk.Canvas):
 
 class Window(tk.Tk):
     selected_convas = None 
-    @classmethod  #在視窗內建立class的 method
+    @classmethod  #Decorator: 在視窗內建立class的 method
     def get_select_convas(cls):
         return cls.selected_convas
 
-    @classmethod
+    @classmethod #Decorator
     def set_select_convas(cls,convas):
         if cls.selected_convas is not None: #對應上段的None
             cls.selected_convas.state = ColorCanvas.OFF 
         cls.selected_convas = convas
         cls.selected_convas.state = ColorCanvas.ON
+
+        light_state = False
+        @classmethod #Decorator
+        def get_current_state(cls):
+            return cls.light_state
+
+        @classmethod #Decorator
+        def set_current_state(cls,state):
+            cls.light_state = state
 
     def __init__(self):
         super().__init__()
