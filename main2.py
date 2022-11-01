@@ -2,26 +2,33 @@ import tkinter as tk
 #建立class取代Window類別內個別方法設定, 繼承父類別tk.Canvas, 修改視窗內之按鈕
 class ColorCanvas(tk.Canvas): 
         def __init__(self,parent,rec_color,**kwargs):
-            width = kwargs['width']
-            height = kwargs['height']
-            super().__init__(parent,**kwargs)
-            self.rec_color = rec_color
-            self.__state = False
-            space = width / 7
-            rec_width = width  - 2 * space 
-            rec_height = height - 2 * space   
-            self.create_rectangle(space, space, width - space, height - space,fill=self.rec_color)
+            self.width = kwargs['width']
+        self.height = kwargs['height']
+        super().__init__(parent,**kwargs)
+        self.rec_color = rec_color
+        self.__state = False
+        self.space = self.width / 7
+        rec_width = self.width  - 2 * self.space 
+        rec_height = self.height - 2 * self.space   
+        self.create_rectangle(self.space, self.space, self.width - self.space, self.height - self.space,fill=self.rec_color)
 
         @property
-        def state(self):
-            return self.__state
+        
+        
         @state.setter
         def state(self,s):
             self.__state  = s
+            self.delete()
+            self.create_rectangle(self.space, self.space, self.width - self.space, self.height - self.space,fill=self.rec_color)        
+        
+        if self.__state == True:
+            #多加小圓點
+            print("多加小圓點")
 
 class Window(tk.Tk):
     def __init__(self):
         super().__init__()
+
         red = ColorCanvas(self,"red",width=100,height=100)
         
         red.bind('<ButtonRelease-1>',self.mouse_click)
