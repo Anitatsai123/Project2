@@ -7,11 +7,11 @@ class ColorCanvas(tk.Canvas):
     #建立一個Class內建的常數(=不可變更)
     ON =  True
     OFF = False
-    def __init__(self,parent,rec_color,**kwargs):
+    def __init__(self,parent,rec_color,**kwargs): 
         self.width = kwargs['width']
         self.height = kwargs['height']
         super().__init__(parent,**kwargs)
-        self.rec_color = rec_color
+        self.rec_color = rec_color #建立燈光顏色之方型色塊
         self.__state = ColorCanvas.OFF
         self.space = self.width / 7  
         self.create_rectangle(self.space, self.space, self.width - self.space, self.height - self.space,fill=self.rec_color)
@@ -27,11 +27,11 @@ class ColorCanvas(tk.Canvas):
         self.create_rectangle(self.space, self.space, self.width - self.space, self.height - self.space,fill=self.rec_color)        
         if self.__state == True:
             #多加小圓點
-            print("多加小圓點")
+            print("小圓點移動")
             rec_width = self.width  - 2 * self.space 
             rec_height = self.height - 2 * self.space
 
-            cir_width = rec_width / 5
+            cir_width = rec_width / 5 
             cir_height = rec_height / 5
             cir_start_x = self.space + cir_width / 2
             cir_end_x = cir_start_x + cir_width
